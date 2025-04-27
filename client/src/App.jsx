@@ -10,7 +10,23 @@ function App() {
 
   const [isLogin, setIsLogin] = useState(false)
   const [user, setUser] = useState(null)
+  const [modify, setModify] = useState(false)
+  const [propDoc, setPropDoc] = useState(null)
+  const [document, setDocument] = useState([])
   const API_URL = 'http://localhost:3000/'
+
+  function fetchData() {
+
+
+    axios.get(`${API_URL}data`)
+      .then(res => {
+        // console.log(res);
+        setDocument(res.data)
+      })
+      .catch(err => {
+        console.error(err);
+      })
+  }
   function checkUser() {
     const token = localStorage.getItem('token');
     if (!token) return;
@@ -21,7 +37,7 @@ function App() {
       },
     })
       .then(res => {
-        console.log(res)
+        // console.log(res)
         setUser(res.data.username)
         setIsLogin(true)
       })
@@ -34,7 +50,7 @@ function App() {
     checkUser()
   }, []);
   return (
-    <GlobalContext.Provider value={{ API_URL, isLogin, setIsLogin, setUser, user, checkUser }}>
+    <GlobalContext.Provider value={{ API_URL, isLogin, setIsLogin, setUser, user, checkUser, modify, setModify, propDoc, setPropDoc, document, setDocument, fetchData }}>
       <BrowserRouter>
         <Routes>
           <Route element={<DefaulLayout />}>

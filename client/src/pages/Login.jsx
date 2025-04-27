@@ -3,7 +3,7 @@ import GlobalContext from "../context/GlobalContext"
 import { useContext } from "react"
 import axios from 'axios'
 export default function Login() {
-    const { API_URL, setIsLogin } = useContext(GlobalContext)
+    const { API_URL, setIsLogin, setUser } = useContext(GlobalContext)
     const initialData = {
         username: "",
         password: ""
@@ -27,6 +27,7 @@ export default function Login() {
                 if (res.status = 200) {
                     localStorage.setItem('token', res.data.token);
                     setIsLogin(true)
+                    setUser(res.data.user.username)
 
                 }
             })
@@ -52,11 +53,11 @@ export default function Login() {
                 <form>
                     <div className="mb-3">
                         <label htmlFor="InputUsername" className="form-label">Nome utente</label>
-                        <input onChange={set} type="text" name="username" className="form-control" id="InputUsername" />
+                        <input onChange={set} type="text" name="username" className="form-control" id="InputUsername" value={data.username} />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="InputPassword" className="form-label">Password</label>
-                        <input onChange={set} type="password" name="password" className="form-control" id="InputPassword" />
+                        <input onChange={set} type="password" name="password" className="form-control" id="InputPassword" value={data.password} />
                     </div>
                     {/* <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="exampleCheck1" />
