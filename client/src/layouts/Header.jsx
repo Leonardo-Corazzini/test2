@@ -1,13 +1,8 @@
 import GlobalContext from "../context/GlobalContext"
 import { useContext } from "react"
 export default function Header() {
-    const { user, setUser, checkUser, setModify, setIsLogin } = useContext(GlobalContext)
-    function logout() {
-        localStorage.removeItem('token')
-        setIsLogin(false)
-        setUser(null)
-        checkUser()
-    }
+    const { user, setModify, setModal } = useContext(GlobalContext)
+
     function onAdd(e) {
         e.preventDefault()
         setModify(true)
@@ -21,7 +16,7 @@ export default function Header() {
                     <button onClick={onAdd} className="btn btn-outline-success" type="submit">Nuovo documento</button>
 
                 </form>
-                <button onClick={logout} className="btn-primary" >{user}</button>
+                <button onClick={() => setModal(true)} className="btn-primary" >{user}</button>
             </div>
         </nav>
     )

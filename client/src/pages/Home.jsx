@@ -1,11 +1,11 @@
 import { useState, useEffect, useContext } from "react";
 import GlobalContext from "../context/GlobalContext"
-import axios from "axios";
 import Form from "./Form";
 import { jsPDF } from "jspdf";
+import Modal from "../components/Modal";
 
 export default function Home() {
-    const { API_URL, setIsLogin, modify, setModify, setPropDoc, document, fetchData } = useContext(GlobalContext)
+    const { API_URL, modify, setModify, setPropDoc, document, fetchData, modal } = useContext(GlobalContext)
 
 
 
@@ -24,10 +24,11 @@ export default function Home() {
         docTest.text(`Importo : ${d.importo}`, 10, 40);
         docTest.text(`Quantita : ${d.quantita}`, 10, 50);
 
-        docTest.save(`a4.pdf`);
+        docTest.save(`${d.nome_documento}.pdf`);
     }
     return (
         <main>
+            {modal && <Modal />}
             {modify && <Form />}
             <div>
                 <table className="table">

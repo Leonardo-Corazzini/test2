@@ -5,6 +5,7 @@ export default function Form() {
 
 
     const { API_URL, setModify, propDoc, fetchData, setPropDoc } = useContext(GlobalContext)
+    const [error, setError] = useState(false)
 
     const initialData = {
         nome_documento: propDoc ? propDoc.nome_documento : '',
@@ -25,6 +26,11 @@ export default function Form() {
 
     function onSubmit(e) {
         e.preventDefault()
+        if (!data.nome_documento) {
+            setError(true)
+            return
+
+        }
         if (propDoc) {
             axios.patch(`${API_URL}data/${propDoc.id}`, data)
                 .then(res => {
@@ -46,7 +52,7 @@ export default function Form() {
                 })
         }
 
-
+        setError(false)
         setModify(false)
     }
     function onClose() {
@@ -64,8 +70,8 @@ export default function Form() {
             <div className="container login">
                 <form>
                     <div className="mb-3">
-                        <label htmlFor="InputNome" className="form-label">Nome</label>
-                        <input onChange={set} type="text" name="nome_documento" className="form-control" id="InputNome" value={data.nome_documento} />
+                        <label htmlFor="InputNome" className="form-label">Nome</label> {error && <span className="red">Campo obbligatorio</span>}
+                        <input onChange={set} type="text" required name="nome_documento" className="form-control" id="InputNome" value={data.nome_documento} />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="InputDescrizione" className="form-label">Descrizione</label>

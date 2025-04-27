@@ -32,3 +32,11 @@ body {
   z-index: 1;
   position: absolute;
 }
+
+main .modal {
+  display: block;
+}
+
+.red {
+  color: red;
+}

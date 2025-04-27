@@ -13,6 +13,7 @@ function App() {
   const [modify, setModify] = useState(false)
   const [propDoc, setPropDoc] = useState(null)
   const [document, setDocument] = useState([])
+  const [modal, setModal] = useState(false)
   const API_URL = 'http://localhost:3000/'
 
   function fetchData() {
@@ -46,11 +47,18 @@ function App() {
         // se il token è scaduto o non valido
       });
   }
+  function logout() {
+    localStorage.removeItem('token')
+    setIsLogin(false)
+    setModal(false)
+    setUser(null)
+    checkUser()
+  }
   useEffect(() => {
     checkUser()
   }, []);
   return (
-    <GlobalContext.Provider value={{ API_URL, isLogin, setIsLogin, setUser, user, checkUser, modify, setModify, propDoc, setPropDoc, document, setDocument, fetchData }}>
+    <GlobalContext.Provider value={{ API_URL, isLogin, setIsLogin, setUser, user, checkUser, modify, setModify, propDoc, setPropDoc, document, setDocument, fetchData, modal, setModal, logout }}>
       <BrowserRouter>
         <Routes>
           <Route element={<DefaulLayout />}>
